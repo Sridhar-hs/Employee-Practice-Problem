@@ -9,6 +9,8 @@ NUM_WORKING_DAYS=20;
 totalEmpHrs=0;
 totalWorkingDays=0;
 
+declare -A dailyWage;
+
 function getWorkHrs() {
 	local $empCheck=$1
 	case $empCheck in
@@ -39,8 +41,10 @@ do
 	empCheck=$((RANDOM%3));
 	empHrs="$( getWorkHrs $empCheck )"
 	totalEmpHrs=$(($totalEmpHrs+$empHrs))
-	dailyWage[$totalWorkingDays]="$( getEmpWage $empHrs )"
+	day="Day"
+	dailyWage[Day "$totalWorkingDays"]="$( getEmpWage $empHrs )"
 done
 
 totalSalary=$(($totalEmpHrs*$EMP_RATE_PER_HR));
 echo ${dailyWage[@]}
+echo ${!dailyWage[@]}
